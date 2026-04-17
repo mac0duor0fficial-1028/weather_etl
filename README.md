@@ -188,14 +188,14 @@ Contributions are welcome! To get started:
 4. Push to the branch: `git push origin feature/your-feature`
 5. Open a Pull Request
 
-Please make sure your code follows existing style conventions and includes docstrings for any new functions.
+---
+
+## 👤 Author
+
+**mac0duor0fficial-1028** · [GitHub](https://github.com/mac0duor0fficial-1028)
 
 ---
 
-## License
+## 📄 License
 
-This project is open source. Feel free to use, modify, and distribute it.
-
----
-
-<p align="center"><a href="https://github.com/mac0duor0fficial-1028/weather_etl">github.com/mac0duor0fficial-1028/weather_etl</a></p>
+This project is open source and available under the [MIT License](https://MIT/LICENSE).
