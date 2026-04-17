@@ -24,11 +24,11 @@
 
 The **Weather ETL Pipeline** automates the collection and persistence of weather data in three clean stages:
 
-| Stage | Description |
-|---|---|
-| **Extract** | Pulls hourly weather data from the Tomorrow.io REST API |
+| Stage               | Description                                                           |
+| ------------------- | --------------------------------------------------------------------- |
+| **Extract**   | Pulls hourly weather data from the Tomorrow.io REST API               |
 | **Transform** | Structures and cleans the raw JSON into typed, analysis-ready records |
-| **Load** | Inserts the transformed records into a PostgreSQL database |
+| **Load**      | Inserts the transformed records into a PostgreSQL database            |
 
 The pipeline is designed to be **lightweight**, **modular**, and easy to extend — making it straightforward to add new data sources, transformation rules, or destination targets.
 
@@ -36,34 +36,19 @@ The pipeline is designed to be **lightweight**, **modular**, and easy to extend 
 
 ## Architecture
 
+Data moves through four stages in a single linear flow:
+
 ```
-┌─────────────────────┐
-│   Tomorrow.io API   │
-└────────┬────────────┘
-         │  HTTP GET (hourly weather data)
-         ▼
-┌─────────────────────┐
-│  extract_weather_   │  ← Fetch raw JSON response
-│      mod.py         │
-└────────┬────────────┘
-         │  Raw hourly data
-         ▼
-┌─────────────────────┐
-│  transform_weather_ │  ← Parse, clean & structure records
-│      mod.py         │
-└────────┬────────────┘
-         │  Transformed records
-         ▼
-┌─────────────────────┐
-│  load_weather_      │  ← Insert into PostgreSQL
-│      mod.py         │
-└────────┬────────────┘
-         │
-         ▼
-┌─────────────────────┐
-│     PostgreSQL      │
-└─────────────────────┘
+Tomorrow.io API  ──(hourly JSON)──►  Extract  ──(raw data)──►  Transform  ──(typed records)──►  Load  ──(SQL insert)──►  PostgreSQL
 ```
+
+| Stage               | Module                               | Responsibility                                                                |
+| ------------------- | ------------------------------------ | ----------------------------------------------------------------------------- |
+| **Extract**   | `etl_mod/extract_weather_mod.py`   | Calls the Tomorrow.io REST API and returns the raw hourly JSON payload        |
+| **Transform** | `etl_mod/transform_weather_mod.py` | Parses the raw response, casts types, drops nulls, and produces clean records |
+| **Load**      | `etl_mod/load_weather_mod.py`      | Connects to PostgreSQL and inserts each transformed record                    |
+
+The three stages are orchestrated by `weather_pipeline_mod.py`, which handles errors at each boundary and exits gracefully if a stage returns no data.
 
 ---
 
@@ -170,6 +155,7 @@ Sends a request to the Tomorrow.io API and returns the raw **hourly weather** da
 ### 🟡 Transform — `etl_mod/transform_weather_mod.py`
 
 Receives the raw hourly data and converts it into structured Python records, handling:
+
 - Field renaming & type casting
 - Removal of nulls / incomplete records
 - Any unit conversions needed for downstream use
@@ -182,13 +168,13 @@ Connects to PostgreSQL and inserts each transformed record into the target table
 
 ## Tech Stack
 
-| Tool | Role |
-|---|---|
-| **Python 3** | Core language |
-| **Tomorrow.io API** | Weather data source |
-| **PostgreSQL** | Data storage |
-| **psycopg2** | Python ↔ PostgreSQL driver |
-| **requests** | HTTP client for API calls |
+| Tool                      | Role                        |
+| ------------------------- | --------------------------- |
+| **Python 3**        | Core language               |
+| **Tomorrow.io API** | Weather data source         |
+| **PostgreSQL**      | Data storage                |
+| **psycopg2**        | Python ↔ PostgreSQL driver |
+| **requests**        | HTTP client for API calls   |
 
 ---
 
