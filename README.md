@@ -198,4 +198,4 @@ This project is open source. Feel free to use, modify, and distribute it.
 
 ---
 
-<p align="center">Built with ☁️ and Python · <a href="https://github.com/mac0duor0fficial-1028/weather_etl">github.com/mac0duor0fficial-1028/weather_etl</a></p>
+<p align="center"><a href="https://github.com/mac0duor0fficial-1028/weather_etl">github.com/mac0duor0fficial-1028/weather_etl</a></p>
