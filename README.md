@@ -1,4 +1,4 @@
-# 🌤️ Weather ETL Pipeline
+#  Weather ETL Pipeline
 
 > A modular Python ETL pipeline that extracts real-time weather data from the **Tomorrow.io API**, transforms it into clean structured records, and loads it into a **PostgreSQL** database for analysis and storage.
 
