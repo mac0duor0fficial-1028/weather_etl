@@ -190,12 +190,6 @@ Contributions are welcome! To get started:
 
 ---
 
-## 👤 Author
-
-**mac0duor0fficial-1028** · [GitHub](https://github.com/mac0duor0fficial-1028)
-
----
-
 ## 📄 License
 
 This project is open source and available under the [MIT License](https://MIT/LICENSE).
